@@ -8,7 +8,7 @@ if (process.env.NODE_ENV != "production") {
   const cors = require("cors");
   const connectToDb = require("./config/connectToDb");
   const postsController = require("./controllers/postsController");
-  const { signup, signin } = require('./controllers/userController');
+  const { signup, signin, fetchUsers } = require('./controllers/userController');
   
   // Create an express app
   const app = express();
@@ -21,6 +21,8 @@ if (process.env.NODE_ENV != "production") {
   connectToDb();
   
   // Routing
+  app.get("/users", fetchUsers);
+
   app.get("/post", postsController.fetchPosts);
   app.get("/post/:id", postsController.fetchPost);
   app.post("/post", postsController.createPost);

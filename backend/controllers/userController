@@ -107,15 +107,15 @@ exports.signin = (req, res) => {
         res.status(500).json({ errors: err });
     });
 }
-/*
-const fetchusers = async (req, res) => {
+
+exports.fetchUsers = async (req, res) => {
   // Find the users
-  const users = await user.find();
+  const users = await User.find();
 
   // Respond with them
   res.json({ users });
 };
-
+/*
 
 const fetchUser = async (req, res) => {
     // Get id off the url

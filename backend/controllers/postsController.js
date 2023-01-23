@@ -1,11 +1,11 @@
 const Post = require("../models/post");
 
 const fetchPosts = async (req, res) => {
-  // Find the Posts
-  const Posts = await Post.find();
+  // Find the posts
+  const posts = await Post.find();
 
   // Respond with them
-  res.json({ Posts });
+  res.json({ posts });
 };
 
 const fetchPost = async (req, res) => {
@@ -13,27 +13,26 @@ const fetchPost = async (req, res) => {
   const PostId = req.params.id;
 
   // Find the Post using that id
-  const Post = await Post.findById(PostId);
+  const posts = await Post.findById(PostId);
 
   // Respond with the Post
-  res.json({ Post });
+  res.json({ posts });
 };
 
 const createPost = async (req, res) => {
   // Get the sent in data off request body
-  const { body} = req.body;
-  const { author } = req.author;
-  const { date } = req.date;
+  let { name, body } = req.body;
+  const date = Date.now();
 
   // Create a Post with it
-  const Post = await Post.create({
-    author,
+  const post = await Post.create({
+    name,
     body,
-    date,
+    date
   });
 
   // respond with the new Post
-  res.json({ Post });
+  res.json({ post });
 };
 
 const updatePost = async (req, res) => {
@@ -41,20 +40,20 @@ const updatePost = async (req, res) => {
   const PostId = req.params.id;
 
   // Get the data off the req body
-  const { author, body, date } = req.body;
+  const { name, body, date } = req.body;
 
   // Find and update the record
   await Post.findByIdAndUpdate(PostId, {
-    author,
+    name,
     body, 
     date
   });
 
   // Find updated Post
-  const Post = await Post.findById(PostId);
+  const posts = await Post.findById(PostId);
 
   // Respond with it
-  res.json({ Post });
+  res.json({ posts });
 };
 
 const deletePost = async (req, res) => {
