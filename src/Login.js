@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import axios from "axios";
-import './Form.css';
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -29,7 +28,6 @@ export default function Login() {
         e.preventDefault();
         axios(configuration)
             .then((result) => {
-
                 // set the cookie
                 cookies.set("TOKEN", result.data.token, {
                     path: "/",
@@ -37,6 +35,7 @@ export default function Login() {
                 cookies.set("USER", result.data.message.name, {
                     path: "/",
                 });
+                alert(result.data.message.name);
                 window.location.href = "/auth";
                 setLogin(true);
             })

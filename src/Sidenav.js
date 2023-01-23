@@ -1,5 +1,4 @@
 import React from "react";
-import { Navigate, useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
@@ -16,8 +15,7 @@ export default function Sidenav() {
                 {token &&
                     <><a className='sidenav-text' href="/logout">Logout</a></>
                 }
-                <a className='sidenav-text' href="/free">Free Component</a>
-                <a className='sidenav-text' href="/auth">Auth Component</a>
+                <a className='sidenav-text' href="/auth">User List</a>
             </div >
         </div>
     );

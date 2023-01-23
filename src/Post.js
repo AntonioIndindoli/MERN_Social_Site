@@ -2,23 +2,22 @@ import React from 'react';
 import { useState } from "react";
 import { Col, Row, Form, Button } from "react-bootstrap";
 import axios from "axios";
-import './Form.css';
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 export default function Post() {
-    const author = cookies.get("USER");
+    var name = cookies.get("USER");
     const [body, setText] = useState("");
 
     const handleSubmit = (e) => {
-
+        alert(name);
         // set configurations
         const configuration = {
             method: "post",
             url: "http://localhost:3000/post",
             data: {
-                author,
+                name,
                 body
             },
         };
@@ -35,13 +34,16 @@ export default function Post() {
             });
 
     }
+    if(!name){
+        return(<div className="group-box-post-loggedout">Log In to Post</div>)
+    }
 
     return (
         <>
-            <div className="group">
-                <Col className="group-box-login">
-                    <Row className='form-text'>Make a Post</Row>
-                    <Form className='form-struct' onSubmit={(e) => handleSubmit(e)}>
+            <div className="group-post">
+                <Col className="group-box-post">
+                    <Row className='post-form-text'>Make a Post</Row>
+                    <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
 
                         {/* text */}
                         <Form.Group controlId="formBasictext">
