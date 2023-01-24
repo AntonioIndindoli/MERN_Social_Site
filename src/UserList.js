@@ -8,7 +8,6 @@ export default function UserList() {
             .then((res) => setData(res.data.users))
             .catch(console.error);
     }, []);
-    alert(data.length);
     if (data.length > 0) {
         return (
             <React.Fragment>
@@ -21,6 +20,6 @@ export default function UserList() {
                 ))}
             </React.Fragment>
         );
-    }else{alert("yes")}
+    }
     return null;
 }

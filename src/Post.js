@@ -9,6 +9,17 @@ const cookies = new Cookies();
 export default function Post() {
     var name = cookies.get("USER");
     const [body, setText] = useState("");
+    const [showForm, setForm] = useState(true);
+
+    const handleSubmitShow = (e) => {
+        if (!showForm && !name)
+            setForm(false);
+        else if (!showForm && name){
+            setForm(true);
+        }else{
+            setForm(true);
+        }    
+    }
 
     const handleSubmit = (e) => {
         alert(name);
@@ -34,43 +45,56 @@ export default function Post() {
             });
 
     }
-    if(!name){
-        return(<div className="group-box-post-loggedout">Log In to Post</div>)
+    if (!name) {
+       // return (<div className="group-box-post-loggedout">Log In to Post</div>)
     }
 
     return (
         <>
             <div className="group-post">
                 <Col className="group-box-post">
-                    <Row className='post-form-text'>Make a Post</Row>
-                    <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
+                    {!showForm &&
+                        <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
 
-                        {/* text */}
-                        <Form.Group controlId="formBasictext">
-                            <Form.Label className='form-input'></Form.Label>
-                            <Form.Control
-                                className='form-input-label'
-                                type="textarea"
-                                name="text"
-                                value={body}
-                                onChange={(e) => setText(e.target.value)}
-                                placeholder="Enter text"
-                            />
-                        </Form.Group>
+                            {/* text */}
+                            <Form.Group controlId="formBasictext">
+                                <textarea
+                                    className='form-post-input-label'
+                                    type="textarea"
+                                    name="text"
+                                    value={body}
+                                    onChange={(e) => setText(e.target.value)}
+                                    placeholder="Enter text"
+                                />
+                            </Form.Group>
 
-                        {/* submit button */}
-                        <Row className='form-text'>
+                            {/* submit button */}
+                            <Row className='form-text'>
+                                <Button
+                                    className='link-header'
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={(e) => handleSubmit(e)}
+                                >
+                                    Submit
+                                </Button>
+
+                            </Row>
+
+                        </Form>
+                    }
+                    {showForm &&
+                    <div>
                             <Button
                                 className='link-header'
                                 variant="primary"
-                                type="submit"
-                                onClick={(e) => handleSubmit(e)}
+                                onClick={(e) => handleSubmitShow(e)}
                             >
-                                Submit
+                                Make a Post
                             </Button>
-
-                        </Row>
-                    </Form>
+                            <p>You must be signed in to post</p>
+                    </div>   
+                    }
                 </Col>
             </div>
         </>
