@@ -5,9 +5,11 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageName: {
+    type: String
+  },
   body: {
-    type: String,
-    required: true,
+    type: String
   },
   date: {
     type: Date,
