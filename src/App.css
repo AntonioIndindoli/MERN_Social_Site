@@ -139,6 +139,10 @@
   background-color: 282c34;
 }
 
+.feed-container {
+  margin-top: 50px;
+}
+
 .group-feed {
   padding: 10px 50px 0px 50px;
   display: flex;
@@ -247,8 +251,24 @@
   overflow: hidden;
   min-width: 300px;
   width: 80%;
-  padding: 10px 10px 10px 10px;
+  padding: 20px 20px 20px 20px;
   background-color: rgb(60, 63, 73);
+}
+
+.Post-img {
+  padding: 10px 10px 10px 10px;
+  width: 100%;
+}
+
+.Post-text-title {
+  font-size: 15px;
+  color: rgb(184, 184, 184);
+  word-break: break-all;
+  text-decoration: none;
+  background-color:rgb(60, 63, 73)23; 
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
 }
 
 .Post-text {

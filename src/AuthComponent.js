@@ -13,7 +13,7 @@ export default function AuthComponent() {
                     <Col sm={2}>
                         <Sidenav />
                     </Col>
-                    <Col sm={8}>
+                    <Col className="feed-container" sm={8}>
                         <UserList />
                     </Col>
                     <Col sm={2}>

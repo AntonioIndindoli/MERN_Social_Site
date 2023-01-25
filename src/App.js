@@ -6,6 +6,7 @@ import Home from "./Home";
 import './App.css';
 import FreeComponent from "./FreeComponent";
 import AuthComponent from "./AuthComponent";
+import ProfileView from "./ProfileView";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 //import ProtectedRoutes from "./ProtectedRoutes";
 //import { Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -29,6 +30,7 @@ function App() {
     <Col className="App">
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route path="/profile/:user" element={<ProfileView/>} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/logout" element={<Logout />} />
         <Route exact path="/register" element={<Register />} />

@@ -2,6 +2,8 @@
 const dotenv = require('dotenv');
 const { S3Client, PutObjectCommand, DeleteObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { getSignedUrl} = require('@aws-sdk/s3-request-presigner');
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 dotenv.config()
 

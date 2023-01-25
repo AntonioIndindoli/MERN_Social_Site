@@ -15,7 +15,7 @@ export default function UserList() {
                 {data.map((users) => (
                     <div className="group-feed">
                     <div className="group-box-feed-post">
-                    <p  className="Post-text-info">Username: {users.name}</p >
+                    <a href={"/profile/"+users.name} className="Post-text-info">Username: {users.name}</a >
                     <p  className="Post-text-info">Joined on: {dateFormat(users.createdAt, "mmmm dS, yyyy")}</p >
                     <p  className="Post-text-info">Email: {users.email}</p >
                     </div>

@@ -30,30 +30,29 @@ export default function Post() {
 
     const handleSubmit = (e) => {
         // set configurations
+        const data = new FormData();
+        data.append("name", name);
+        data.append("body", body);
+        if (file) {
+            data.append("file", file);
+        }
         const configuration = {
             method: "post",
             url: "http://localhost:3000/post",
-            data: {
-                name,
-                body,
-                file
-            },
+            data: data,
         };
 
         // prevent the form from refreshing the whole page
         e.preventDefault();
         axios(configuration)
             .then((result) => {
-
+                window.location.reload(false);
             })
             .catch((error) => {
                 error = new Error();
                 alert("Error");
             });
 
-    }
-    if (!name) {
-        // return (<div className="group-box-post-loggedout">Log In to Post</div>)
     }
 
     return (
@@ -75,7 +74,7 @@ export default function Post() {
                                 />
                             </Form.Group>
 
-                            <input onChange={fileSelected} type="file" accept="image/*"></input>
+                            <input onChange={fileSelected} accept="image/*" type="file"></input>
 
                             {/* submit button */}
                             <Row className='group-feed'>

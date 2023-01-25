@@ -5,10 +5,10 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  imageName: {
+   body: {
     type: String
-  },
-  body: {
+  }, 
+  imageName: {
     type: String
   },
   date: {

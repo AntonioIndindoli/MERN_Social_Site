@@ -1,31 +1,27 @@
-import React from "react";
 import Sidenav from "./Sidenav";
+import React from "react";
+import Profile from "./Profile";
 import SidenavRight from "./SidenavRight";
-import Post from "./Post";
-import Feed from "./Feed";
 import { Col, Row, Container, Button } from "react-bootstrap";
 
-export default function Home() {
+export default function AuthComponent() {
     return (
+
         <div>
             <Container>
                 <Row>
                     <Col sm={2}>
-                    <Sidenav />
+                        <Sidenav />
                     </Col>
-
-
                     <Col className="feed-container" sm={8}>
-                    <Post />
-                    <Feed />
+                        <Profile />
                     </Col>
-
-
                     <Col sm={2}>
-                    <SidenavRight />
+                        <SidenavRight />
                     </Col>
                 </Row>
             </Container>
         </div>
     );
 }
+

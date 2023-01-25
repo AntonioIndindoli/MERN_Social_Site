@@ -4,18 +4,27 @@ const { uploadFile, deleteFile, getObjectSignedUrl } = require('../s3.js');
 const multer = require("multer");
 const sharp = require("sharp");
 const crypto = require("crypto");
-const storage = multer.memoryStorage()
-const upload = multer({ storage: storage })
-
-const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
+const upload = multer({ dest: 'uploads/' })
 
 const fetchPosts = async (req, res) => {
   // Find the posts
-  const posts = await Post.find();
+  const posts = await Post.find().sort({date:-1});
 
   for (let post of posts) {
-    if(post.imageName)
-    post.imageUrl = await getObjectSignedUrl(post.imageName)
+    post.imageName = await getObjectSignedUrl(post.imageName)
+  }
+
+  // Respond with them
+  res.json({ posts });
+};
+
+const fetchPostbyUser = async (req, res) => {
+  // Find the posts
+  var userurl = req.params.user;
+  const posts = await Post.find({ "name": userurl }).sort({date:-1});
+
+  for (let post of posts) {
+    post.imageName = await getObjectSignedUrl(post.imageName)
   }
 
   // Respond with them
@@ -29,44 +38,12 @@ const fetchPost = async (req, res) => {
   // Find the Post using that id
   const posts = await Post.findById(PostId);
 
+  for (let post of posts) {
+    post.imageName = await getObjectSignedUrl(post.imageName)
+  }
+
   // Respond with the Post
   res.json({ posts });
-};
-
-const createPost = async (req, res) => {
-  // Get the sent in data off request body
-  let { name, body } = req.body;
-  const date = Date.now();
-  const imageName = generateFileName();
-  let file = req.file;
-  if(req.file){
-      const fileBuffer = await sharp(file.buffer)
-    .resize({ height: 1920, width: 1080, fit: "contain" })
-    .toBuffer()
-
-  await uploadFile(fileBuffer, imageName, file.mimetype)
-
-  // Create a Post with it
-  const post = await Post.create({
-    name,
-    body,
-    date,
-    imageName,
-  });
-  }
-  else{
-  const post = await Post.create({
-    name,
-    body,
-    date,
-    imageName,
-  });
-  }
-
-
-
-  // respond with the new Post
-  res.json({ post });
 };
 
 const updatePost = async (req, res) => {
@@ -105,7 +82,7 @@ const deletePost = async (req, res) => {
 module.exports = {
   fetchPosts,
   fetchPost,
-  createPost,
+  fetchPostbyUser,
   updatePost,
   deletePost,
 };
