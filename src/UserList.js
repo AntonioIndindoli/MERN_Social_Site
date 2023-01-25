@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
+import dateFormat from 'dateformat';
 
 export default function UserList() {
     const [data, setData] = useState([]);
@@ -13,9 +14,11 @@ export default function UserList() {
             <React.Fragment>
                 {data.map((users) => (
                     <div className="group-feed">
-                        <h1 className="Post-text">Username: {users.name}</h1>
-                        <p className="Post-text">Email: {users.email}</p>
-                        <p className="Post-text">Joined on: {users.createdAt}</p>
+                    <div className="group-box-feed-post">
+                    <p  className="Post-text-info">Username: {users.name}</p >
+                    <p  className="Post-text-info">Joined on: {dateFormat(users.createdAt, "mmmm dS, yyyy")}</p >
+                    <p  className="Post-text-info">Email: {users.email}</p >
+                    </div>
                     </div>
                 ))}
             </React.Fragment>

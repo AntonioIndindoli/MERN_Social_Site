@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from "react";
-import { Col, Row, Form, Button } from "react-bootstrap";
+import { Col, Row, Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
 
 import Cookies from "universal-cookie";
@@ -9,27 +9,34 @@ const cookies = new Cookies();
 export default function Post() {
     var name = cookies.get("USER");
     const [body, setText] = useState("");
-    const [showForm, setForm] = useState(true);
+    const [showForm, setForm] = useState(false);
+    const [showWarning, setWarning] = useState(false);
+    const [file, setFile] = useState();
+  
+    const fileSelected = event => {
+      const file = event.target.files[0]
+          setFile(file)
+      }
 
     const handleSubmitShow = (e) => {
-        if (!showForm && !name)
+        if (!name) {
+            setWarning(true);
             setForm(false);
-        else if (!showForm && name){
+        }
+        else if (!showForm) {
             setForm(true);
-        }else{
-            setForm(true);
-        }    
+        }
     }
 
     const handleSubmit = (e) => {
-        alert(name);
         // set configurations
         const configuration = {
             method: "post",
             url: "http://localhost:3000/post",
             data: {
                 name,
-                body
+                body,
+                file
             },
         };
 
@@ -46,14 +53,14 @@ export default function Post() {
 
     }
     if (!name) {
-       // return (<div className="group-box-post-loggedout">Log In to Post</div>)
+        // return (<div className="group-box-post-loggedout">Log In to Post</div>)
     }
 
     return (
         <>
             <div className="group-post">
-                <Col className="group-box-post">
-                    {!showForm &&
+                <div className="group-box-post">
+                    {showForm &&
                         <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
 
                             {/* text */}
@@ -68,34 +75,33 @@ export default function Post() {
                                 />
                             </Form.Group>
 
+                            <input onChange={fileSelected} type="file" accept="image/*"></input>
+
                             {/* submit button */}
-                            <Row className='form-text'>
+                            <Row className='group-feed'>
+
                                 <Button
-                                    className='link-header'
+                                    className='submit-button'
                                     variant="primary"
                                     type="submit"
                                     onClick={(e) => handleSubmit(e)}
-                                >
-                                    Submit
-                                </Button>
+                                >+</Button>
 
                             </Row>
-
                         </Form>
                     }
-                    {showForm &&
-                    <div>
+                    {!showForm &&
+                        <div>
                             <Button
-                                className='link-header'
+                                className='make-a-post'
                                 variant="primary"
                                 onClick={(e) => handleSubmitShow(e)}
-                            >
-                                Make a Post
-                            </Button>
-                            <p>You must be signed in to post</p>
-                    </div>   
+                            >+</Button>
+                            Make a Post
+                        </div>
                     }
-                </Col>
+                    {showWarning && <p className='text-warning'>You must be signed in to post</p>}
+                </div>
             </div>
         </>
     )

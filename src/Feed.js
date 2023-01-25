@@ -1,5 +1,7 @@
 import axios from "axios";
-import React, { Col, useState, useEffect } from 'react';
+import React, { Row, Col, useState, useEffect } from 'react';
+import DOMPurify from "dompurify";
+import dateFormat from 'dateformat';
 
 export default function Feed() {
     const [data, setData] = useState([]);
@@ -13,9 +15,9 @@ export default function Feed() {
             <React.Fragment>
                 {data.map((post) => (
                     <div className="group-feed">
-                <div className="group-box-feed-post">
-                        <h1 className="Post-text">{post.name} on {post.date}</h1>
-                        <p className="Post-text">{post.body}</p>
+                    <div className="group-box-feed-post">
+                    <p  className="Post-text-info">{post.name} - {dateFormat(post.date, "mmmm dS, yyyy")}</p >
+                    <article className="Post-text" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body)}} />
                     </div>
                     </div>
                 ))}

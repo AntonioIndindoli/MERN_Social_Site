@@ -36,20 +36,9 @@
   text-decoration: none;
 }
 
-.Post-text {
-  font-size: 15px;
-  color: rgb(219, 219, 219);
-  height: 30px;
-  text-decoration: none;
-  background-color:rgb(60, 63, 73)23; 
-
-  align-items: center;
-}
-
 .sidenav{
   height: 100%;  
-  width: 18%;  
-  min-width: 180px;  
+  width: 25%;  
   position: fixed; 
   z-index: 1; 
   top: 0; 
@@ -57,16 +46,19 @@
   background-color:#232323; 
   transition: .5s ease; 
   overflow-x: hidden; 
-  padding-top: 20px; 
-  padding-left: 40px; 
+  padding-top: 50px; 
+  padding-left: 15%; 
   display: flex; 
   flex-direction: column; 
-  align-items: left;
+  align-items: right;
+  justify-content: right;
 }
 
 .sidenav-text {
+  text-align: center;
   text-decoration: none;
-  justify-content: center;
+  align-items: right;
+  justify-content: right;
   background: none;
   color: rgb(219, 219, 219);
   font-size: 18px;
@@ -76,6 +68,20 @@
   border: none;
   border-radius: 0;
   border-bottom: 1px solid gray;
+}
+
+.sidenav-right{
+  height: 100%;  
+  width: 25%;  
+  position: fixed; 
+  z-index: 1; 
+  top: 0; 
+  right: 0;
+  background-color:#232323; 
+  transition: .5s ease; 
+  overflow-x: hidden; 
+  padding-top: 50px; 
+  padding-right: 15%; 
 }
 
 .form{
@@ -126,19 +132,18 @@
 }
 
 .group-post {
-  padding: 20px 50px 0px 50px;
+  padding: 10px 50px 0px 50px;
+  display: flex;
   justify-content: center;
-  margin-left: 18%;
   width: 100%;
   background-color: 282c34;
 }
 
 .group-feed {
-  padding: 20px 50px 0px 50px;
+  padding: 10px 50px 0px 50px;
+  display: flex;
   justify-content: center;
-  margin-left: 18%;
   width: 100%;
-  min-height: 100px;
   background-color: 282c34;
 }
 
@@ -151,6 +156,43 @@
 }
 
 .link-header{
+  justify-self: left;
+  font-size:15px;
+  height:50px;
+  border-width:1px;
+  color:#ffffff;
+  border-color:#3e7fbd;
+  font-weight:bold;
+  border-top-left-radius:6px;
+  border-top-right-radius:6px;
+  border-bottom-left-radius:6px;
+  border-bottom-right-radius:6px;
+  box-shadow:inset 0px 1px 0px 0px #5084b6;
+  text-shadow:inset 0px 1px 0px #2c5e8d;
+  background:linear-gradient(#3e7fbd, #316a9e);
+  max-width: 96%;
+}
+
+.submit-button{
+  font-size: 10px;
+  left: 0;
+  height:30px;
+  border-width:1px;
+  color:#ffffff;
+  border-color:#3e7fbd;
+  font-weight:bold;
+  border-top-left-radius:6px;
+  border-top-right-radius:6px;
+  border-bottom-left-radius:6px;
+  border-bottom-right-radius:6px;
+  box-shadow:inset 0px 1px 0px 0px #5084b6;
+  text-shadow:inset 0px 1px 0px #2c5e8d;
+  background:linear-gradient(#3e7fbd, #316a9e);
+  max-width: 20%;
+}
+
+.make-a-post{
+  margin: 10px;
   justify-self: left;
   font-size:15px;
   height:50px;
@@ -192,22 +234,45 @@
 }
 
 .group-box-post {
-  justify-content: center;
+  justify-content: left;
+  overflow: hidden;
   min-width: 300px;
-  max-width: 70%;
-  width: 70%;
-  padding: 20px 20px 20px 20px;
+  width: 80%;
+  padding: 10px 10px 10px 10px;
   background-color: rgb(60, 63, 73);
 }
 
 .group-box-feed-post {
-  justify-content: center;
+  justify-content: left;
+  overflow: hidden;
   min-width: 300px;
-  max-width: 70%;
-  width: 70%;
-
-  padding: 10px;
+  width: 80%;
+  padding: 10px 10px 10px 10px;
   background-color: rgb(60, 63, 73);
+}
+
+.Post-text {
+  font-size: 15px;
+  color: rgb(184, 184, 184);
+  word-break: break-all;
+  text-decoration: none;
+  background-color:rgb(60, 63, 73)23; 
+}
+
+.Post-text-name {
+  font-size: 15px;
+  color: rgb(255, 255, 255);
+  word-break: break-all;
+  text-decoration: none;
+  background-color:rgb(60, 63, 73)23; 
+}
+
+.Post-text-date {
+  font-size: 15px;
+  color: rgb(136, 136, 136);
+  word-break: break-all;
+  text-decoration: none;
+  background-color:rgb(60, 63, 73)23; 
 }
 
 .group-box-post-loggedout {
@@ -255,4 +320,11 @@
   border: none;
   border-radius: 4px;
   border-top: 1px solid rgb(43, 43, 43);
+}
+
+.text-warning {
+  color: rgb(184, 35, 35);
+  font-size: 18px;
+  padding: 0px 0px 0px 15px;
+  width: 100%;
 }

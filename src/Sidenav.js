@@ -9,12 +9,6 @@ export default function Sidenav() {
         <div>
             <div className="sidenav">
                 <a className='sidenav-text' href="/">Home</a>
-                {!token &&
-                    <><a className='sidenav-text' href="/login">Login</a><a className='sidenav-text' href="/register">Register</a></>
-                }
-                {token &&
-                    <><a className='sidenav-text' href="/logout">Logout</a></>
-                }
                 <a className='sidenav-text' href="/auth">User List</a>
             </div >
         </div>

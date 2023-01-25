@@ -1,13 +1,26 @@
 import Sidenav from "./Sidenav";
 import React from "react";
-import Post from "./Post";
 import UserList from "./UserList";
+import SidenavRight from "./SidenavRight";
+import { Col, Row, Container, Button } from "react-bootstrap";
 
 export default function AuthComponent() {
     return (
+
         <div>
-            <Sidenav/>
-            <UserList/>
+            <Container>
+                <Row>
+                    <Col sm={2}>
+                        <Sidenav />
+                    </Col>
+                    <Col sm={8}>
+                        <UserList />
+                    </Col>
+                    <Col sm={2}>
+                        <SidenavRight />
+                    </Col>
+                </Row>
+            </Container>
         </div>
     );
 }

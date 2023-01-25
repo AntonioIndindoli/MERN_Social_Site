@@ -35,7 +35,6 @@ export default function Login() {
                 cookies.set("USER", result.data.message.name, {
                     path: "/",
                 });
-                alert(result.data.message.name);
                 window.location.href = "/auth";
                 setLogin(true);
             })
