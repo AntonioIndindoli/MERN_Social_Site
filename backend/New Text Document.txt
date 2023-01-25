@@ -1,0 +1,8 @@
+PORT=3000
+DB_URL=mongodb+srv://Antonio:2erezNOh8m8@cluster0.pledd2s.mongodb.net/?retryWrites=true&w=majority
+TOKEN_SECRET=mayuns
+
+AWS_BUCKET_NAME='mern-socialsite'
+AWS_BUCKET_REGION='us-west-1'
+AWS_ACCESS_KEY='AKIAQNCPU5QETOA3LUOK'
+AWS_SECRET_ACCESS_KEY='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'
