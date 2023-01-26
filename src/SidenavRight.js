@@ -5,6 +5,8 @@ const cookies = new Cookies();
 
 export default function Sidenav() {
     const token = cookies.get("TOKEN");
+    const user = cookies.get("USER");
+    const userProfile = "/myProfile/"+user;
 
     return (
         <div>
@@ -14,7 +16,8 @@ export default function Sidenav() {
                     <><a className='sidenav-text' href="/login">Login</a><a className='sidenav-text' href="/register">Register</a></>
                 }
                 {token &&
-                    <><a className='sidenav-text' href="/logout">Logout</a></>
+                    <><a className='sidenav-text' href="/logout">Logout</a>
+                    <a className='sidenav-text' href={userProfile}>My Profile</a></>
                 }
             </div >
             </Col>

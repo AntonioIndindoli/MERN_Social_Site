@@ -151,12 +151,21 @@
   background-color: 282c34;
 }
 
+.button-bar {
+  margin-left: 0px;
+  padding: 00px 0px 0px 0px;
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  background-color: rgb(82, 82, 82);
+}
+
 .form-struct {
   justify-content: center;
 }
 
 .form-struct-post {
-  justify-content: left;
+  justify-content: center;
 }
 
 .link-header{
@@ -241,7 +250,7 @@
   justify-content: left;
   overflow: hidden;
   min-width: 300px;
-  width: 80%;
+  width: 90%;
   padding: 10px 10px 10px 10px;
   background-color: rgb(60, 63, 73);
 }
@@ -250,7 +259,7 @@
   justify-content: left;
   overflow: hidden;
   min-width: 300px;
-  width: 80%;
+  width: 90%;
   padding: 20px 20px 20px 20px;
   background-color: rgb(60, 63, 73);
 }
@@ -262,7 +271,7 @@
 
 .Post-text-title {
   font-size: 15px;
-  color: rgb(184, 184, 184);
+  color: rgb(255, 255, 255);
   word-break: break-all;
   text-decoration: none;
   background-color:rgb(60, 63, 73)23; 
@@ -272,8 +281,9 @@
 }
 
 .Post-text {
+  margin: 10px;
   font-size: 15px;
-  color: rgb(184, 184, 184);
+  color: rgb(196, 196, 196);
   word-break: break-all;
   text-decoration: none;
   background-color:rgb(60, 63, 73)23; 
@@ -347,4 +357,22 @@
   font-size: 18px;
   padding: 0px 0px 0px 15px;
   width: 100%;
+}
+
+.group-post-comment-form {
+  border-top: 1px solid rgb(92, 92, 92);
+  padding: 5px 0px 180px 0px;
+  width: 100%;
+  height: 100px;
+}
+
+.group-post-comment {
+  padding: 10px 10px 10px 10px;
+  width: 100%;
+}
+
+.comments {
+  padding: 10px 10px 0px 10px;
+  width: 100%;
+  border-left: 4px solid rgb(92, 92, 92);
 }

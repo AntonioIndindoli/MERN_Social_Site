@@ -7,10 +7,14 @@ import './App.css';
 import FreeComponent from "./FreeComponent";
 import AuthComponent from "./AuthComponent";
 import ProfileView from "./ProfileView";
+import PostComment from "./PostComment";
+import Comments from "./Comments";
+import MyProfile from "./MyProfile";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 //import ProtectedRoutes from "./ProtectedRoutes";
 //import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Cookies from "universal-cookie";
+import EditUser from "./EditUser";
 const cookies = new Cookies();
 
 function App() {
@@ -31,6 +35,9 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path="/profile/:user" element={<ProfileView/>} />
+        <Route path="/PostComment/:postId" element={<PostComment/>} />
+        <Route path="/comment/:postId" element={<Comments/>} />
+        <Route path="/myProfile/:user" element={<MyProfile/>} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/logout" element={<Logout />} />
         <Route exact path="/register" element={<Register />} />
