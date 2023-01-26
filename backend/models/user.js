@@ -12,6 +12,10 @@ const Schema = mongoose.Schema; let userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    img: {
+        data: Buffer,
+        type: String
     }
 }, {
     timestamps: true,

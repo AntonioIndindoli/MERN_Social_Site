@@ -10,7 +10,8 @@ const express = require("express");
 const cors = require("cors");
 const connectToDb = require("./config/connectToDb");
 const postsController = require("./controllers/postsController");
-const { signup, signin, fetchUsers } = require('./controllers/userController');
+const commentController = require("./controllers/commentController");
+const userController = require('./controllers/userController');
 const multer  = require('multer');
 const sharp = require("sharp");
 const crypto = require("crypto");
@@ -30,10 +31,22 @@ connectToDb();
 const generateFileName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex');
 
 // Routing
-app.get("/users", fetchUsers);
+app.get("/comment/:postId", commentController.fetchCommentsByPost);
+app.get("/comment/:user", commentController.fetchCommentbyUser);
+app.get("/comment/:id", commentController.fetchComment);
+app.post("/comment/:postId", commentController.createComment);
+app.put("/comment/:id", commentController.updateComment);
+app.delete("/comment/:id", commentController.deleteComment);
+app.get("/users/:user", userController.fetchUser);
+app.get("/users", userController.fetchUsers);
+app.put("/users/:user", upload.single('file'), userController.updateUser);
 app.get("/post", postsController.fetchPosts);
 app.get("/post/:user", postsController.fetchPostbyUser);
 app.get("/post/:id", postsController.fetchPost);
+app.put("/post/:id", postsController.updatePost);
+app.delete("/post/:id", postsController.deletePost);
+app.post('/signup', userController.signup);
+app.post('/signin', userController.signin);
 app.post("/post", upload.single('file'),  async (req, res) => {
   // Get the sent in data off request body
   let { name, body } = req.body;
@@ -68,10 +81,7 @@ app.post("/post", upload.single('file'),  async (req, res) => {
   // respond with the new Post
   res.json({ post });
 });
-app.put("/post/:id", postsController.updatePost);
-app.delete("/post/:id", postsController.deletePost);
-app.post('/signup', signup);
-app.post('/signin', signin);
+
 
 // Start our server
 app.listen(process.env.PORT);
