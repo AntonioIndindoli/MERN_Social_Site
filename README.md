@@ -1,8 +1,8 @@
 
 This is a social networking site built using the MERN stack. 
 
-Front end instructions:
+Front end:
 npm start
 
-Back end instructions:
+Back end:
 npm run dev
