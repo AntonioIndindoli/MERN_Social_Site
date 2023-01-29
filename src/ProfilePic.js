@@ -1,29 +1,31 @@
 import axios from "axios";
 import React, { Image, Row, Col, useState, useEffect } from 'react';
-import dateFormat from 'dateformat';
-import { BrowserRouter as Router, useParams, } from "react-router-dom";
+import placeholder from './placeholder.png';
 
-export default function ProfilePic({user}) {
+export default function ProfilePic({ userParam }) {
     const [data, setData] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:3000/users/"+user)
-            .then((res) => setData(res.data.users))
+        axios.get("http://localhost:3000/users/" + userParam)
+            .then((res) => setData(res.data.user))
             .catch(console.error);
-    }, []);
-    
-    if (data) {
-        if (data.map    ) {
-        alert(found);
-        const blob = new Blob([Int8Array.from(data.img)], {type: data.img.contentType });
-        const image = window.URL.createObjectURL(blob);
 
+    }, []);
+
+    if (data.length) {
+        const images = data.map(({ img }) => img)
+        if(images[0] && images[0] != 'noImage'){
         return (
             <React.Fragment>
-                <img src={image} />
+                <img className="pfp" src={`data:image/png;base64,${images[0]}`} />
             </React.Fragment>
         );
         }
-        return null;
+        return (
+            //Placeholder
+            <React.Fragment>
+                <img className="pfp" src={placeholder} />
+            </React.Fragment>
+        );
     }
     return null;
 }

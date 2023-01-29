@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from 'react';
 import dateFormat from 'dateformat';
+import ProfilePic from "./ProfilePic";
+import ShowMore from 'react-show-more-button/dist/module';
 
 export default function UserList() {
     const [data, setData] = useState([]);
@@ -15,9 +17,9 @@ export default function UserList() {
                 {data.map((users) => (
                     <div className="group-feed">
                     <div className="group-box-feed-post">
-                    <a href={"/profile/"+users.name} className="Post-text-info">Username: {users.name}</a >
-                    <p  className="Post-text-info">Joined on: {dateFormat(users.createdAt, "mmmm dS, yyyy")}</p >
-                    <p  className="Post-text-info">Email: {users.email}</p >
+                    <ProfilePic userParam={users.name} />
+                    <a href={"/profile/"+users.name} className="Post-text-title">{users.name}</a >
+                    <p  className="Post-text">Joined on: {dateFormat(users.createdAt, "mmmm dS, yyyy")}</p >
                     </div>
                     </div>
                 ))}

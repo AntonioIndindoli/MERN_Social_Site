@@ -21,7 +21,7 @@ export default function Home() {
                     </Col>
 
 
-                    <Col sm={2}>
+                    <Col sm={1}>
                     <SidenavRight />
                     </Col>
                 </Row>

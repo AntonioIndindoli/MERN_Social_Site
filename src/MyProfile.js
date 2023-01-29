@@ -4,6 +4,7 @@ import SidenavRight from "./SidenavRight";
 import { Col, Row, Container, Button } from "react-bootstrap";
 import EditUser from "./EditUser";
 import Profile from "./Profile";
+import Post from "./Post";
 
 export default function MyProfile() {
     return (
@@ -15,7 +16,6 @@ export default function MyProfile() {
                         <Sidenav />
                     </Col>
                     <Col className="feed-container" sm={8}>
-                        <EditUser />
                         <Profile/>
                     </Col>
                     <Col sm={2}>

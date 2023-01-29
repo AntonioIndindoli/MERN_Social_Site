@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { Col, Row, Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
+import post from './post.png';
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -12,11 +13,11 @@ export default function Post() {
     const [showForm, setForm] = useState(false);
     const [showWarning, setWarning] = useState(false);
     const [file, setFile] = useState();
-  
+
     const fileSelected = event => {
-      const file = event.target.files[0]
-          setFile(file)
-      }
+        const file = event.target.files[0]
+        setFile(file)
+    }
 
     const handleSubmitShow = (e) => {
         if (!name) {
@@ -55,9 +56,15 @@ export default function Post() {
 
     }
 
+    const hiddenFileInput = React.useRef(null);
+    const handleClick = event => {
+        hiddenFileInput.current.click();
+    };
+
+//<input className='file-upload' onChange={fileSelected} accept="image/*" type="file"></input>
     return (
         <>
-            <div className="group-post">
+            <div className="group-feed">
                 <div className="group-box-post">
                     {showForm &&
                         <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
@@ -74,17 +81,24 @@ export default function Post() {
                                 />
                             </Form.Group>
 
-                            <input onChange={fileSelected} accept="image/*" type="file"></input>
-
                             {/* submit button */}
-                            <Row className='group-feed'>
+                            <Row className='button-bar'>
+                                {file && <p className='text-notify'>File Attached</p>}
+                                <Button className='submit-button' onClick={handleClick}>
+                                    Upload a file
+                                </Button>
+                                <input
+                                    type="file"
+                                    ref={hiddenFileInput}
+                                    onChange={fileSelected}
+                                    style={{ display: 'none' }} />
 
                                 <Button
                                     className='submit-button'
                                     variant="primary"
                                     type="submit"
                                     onClick={(e) => handleSubmit(e)}
-                                >+</Button>
+                                >Post</Button>
 
                             </Row>
                         </Form>
@@ -92,11 +106,11 @@ export default function Post() {
                     {!showForm &&
                         <div>
                             <Button
-                                className='make-a-post'
+                                className='post-button'
                                 variant="primary"
                                 onClick={(e) => handleSubmitShow(e)}
-                            >+</Button>
-                            Make a Post
+                            ><img className="post-logo" src={post} alt="post" />Make a Post</Button>
+
                         </div>
                     }
                     {showWarning && <p className='text-warning'>You must be signed in to post</p>}
@@ -106,6 +120,3 @@ export default function Post() {
     )
 
 }
-
-
-
