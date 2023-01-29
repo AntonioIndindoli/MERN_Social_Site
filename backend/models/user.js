@@ -13,6 +13,9 @@ const Schema = mongoose.Schema; let userSchema = new Schema({
         type: String,
         required: true
     },
+    bio: {
+        type: String
+    },
     img: {
         data: Buffer,
         type: String

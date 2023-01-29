@@ -11,6 +11,7 @@ const fetchPosts = async (req, res) => {
   const posts = await Post.find().sort({date:-1});
 
   for (let post of posts) {
+    if(post.imageName != 'noImage')
     post.imageName = await getObjectSignedUrl(post.imageName)
   }
 
@@ -24,6 +25,7 @@ const fetchPostbyUser = async (req, res) => {
   const posts = await Post.find({ "name": userurl }).sort({date:-1});
 
   for (let post of posts) {
+    if(post.imageName != 'noImage')
     post.imageName = await getObjectSignedUrl(post.imageName)
   }
 
@@ -39,12 +41,26 @@ const fetchPost = async (req, res) => {
   const posts = await Post.findById(PostId);
 
   for (let post of posts) {
+    if(post.imageName != 'noImage')
     post.imageName = await getObjectSignedUrl(post.imageName)
   }
 
   // Respond with the Post
   res.json({ posts });
 };
+
+const likePost = async (req, res) => {
+  const PostId = req.params.id;
+  Post.findByIdAndUpdate(PostId, {
+    $push: {likes: req.params.name}
+  }, {new: true}).exec((err, result) => {
+    if (err) {
+      return res.status(422).json({error: err})
+    } else {
+      return res.json(result)
+    }
+  })
+}
 
 const updatePost = async (req, res) => {
   // Get the id off the url
@@ -82,6 +98,7 @@ const deletePost = async (req, res) => {
 module.exports = {
   fetchPosts,
   fetchPost,
+  likePost,
   fetchPostbyUser,
   updatePost,
   deletePost,

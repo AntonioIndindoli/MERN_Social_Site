@@ -11,6 +11,9 @@ const postSchema = new mongoose.Schema({
   imageName: {
     type: String
   },
+  likes: {
+    type: [String]
+  },
   date: {
     type: Date,
     default: Date.now

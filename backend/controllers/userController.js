@@ -1,8 +1,8 @@
 const User = require("../models/user");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const {createJWT,} = require("../utils/auth"); 
-const multer  = require('multer');
+const { createJWT, } = require("../utils/auth");
+const multer = require('multer');
 const sharp = require("sharp");
 const crypto = require("crypto");
 const storage = multer.memoryStorage()
@@ -13,6 +13,7 @@ const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 const signup = (req, res, next) => {
     let { name, email, password, password_confirmation } = req.body; let errors = [];
     let img = 'placeholder'
+    let bio = 'placeholder'
     if (!name) {
         errors.push({ name: "required" });
     } if (!email) {
@@ -38,6 +39,7 @@ const signup = (req, res, next) => {
                     name: name,
                     email: email,
                     password: password,
+                    bio: bio,
                     img: img,
                 }); bcrypt.genSalt(10, function (err, salt) {
                     bcrypt.hash(password, salt, function (err, hash) {
@@ -119,18 +121,31 @@ const updateUser = async (req, res) => {
 
     // Get the id off the url
     const userName = req.params.user;
-
+    var img = 'noImage'
     // Get the data off the req body
-    const { name, email, password, date } = req.body;
-
-    const img = await sharp(req.file.buffer)
-    .resize({ width: 144 })
-    .toBuffer()
-
-    // Find and update the record
-    await User.findOneAndUpdate({ "name": userName}, {
-        img
-    });
+    const { bio } = req.body;
+    if (req.file) {
+        img = await sharp(req.file.buffer)
+            .resize({ width: 144 })
+            .toBuffer()
+        img = Buffer.from(img).toString('base64')
+        if (!bio.length) {
+            await User.findOneAndUpdate({ "name": userName }, {
+                img
+            });
+        }
+        else {
+            await User.findOneAndUpdate({ "name": userName }, {
+                bio,
+                img
+            });
+        }
+    } else if (bio.length) { {
+            await User.findOneAndUpdate({ "name": userName }, {
+                bio
+            });
+        }
+    }
 
     // Find updated User
     const users = await User.find({ "name": userName });
@@ -140,11 +155,11 @@ const updateUser = async (req, res) => {
 };
 
 const fetchUsers = async (req, res) => {
-  // Find the users
-  const users = await User.find();
+    // Find the users
+    const users = await User.find();
 
-  // Respond with them
-  res.json({ users });
+    // Respond with them
+    res.json({ users });
 };
 
 const fetchUser = async (req, res) => {

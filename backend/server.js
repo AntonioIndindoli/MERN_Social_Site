@@ -44,6 +44,7 @@ app.get("/post", postsController.fetchPosts);
 app.get("/post/:user", postsController.fetchPostbyUser);
 app.get("/post/:id", postsController.fetchPost);
 app.put("/post/:id", postsController.updatePost);
+app.put("/likepost/:id", postsController.likePost);
 app.delete("/post/:id", postsController.deletePost);
 app.post('/signup', userController.signup);
 app.post('/signin', userController.signin);
