@@ -5,11 +5,12 @@ This is a social networking site built using the MERN stack.
 * Posts system with image uploads using S3 bucket
 * Comment system
 * Profile pages
+* Profile pics
+* Profile bio
 
 # In development/planned features:
 * Like/dislike system
-* Profile pics
-* Profile bio and customization
+* Profile customization
 * Front end form verification
 
 Front end:
