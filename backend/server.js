@@ -41,7 +41,7 @@ app.get("/users/:user", userController.fetchUser);
 app.get("/users", userController.fetchUsers);
 app.put("/users/:user", upload.single('file'), userController.updateUser);
 app.get("/post", postsController.fetchPosts);
-app.get("/post/:user", postsController.fetchPostbyUser);
+app.get("/posts/:user", postsController.fetchPostbyUser);
 app.get("/post/:id", postsController.fetchPost);
 app.put("/post/:id", postsController.updatePost);
 app.put("/likepost/:id", postsController.likePost);
@@ -53,6 +53,7 @@ app.post("/post", upload.single('file'),  async (req, res) => {
   let { name, body } = req.body;
   const date = Date.now();
   var imageName = generateFileName();
+  let likes = new Array (name);
   var post;
 
   if(req.file){
@@ -67,6 +68,7 @@ app.post("/post", upload.single('file'),  async (req, res) => {
     name,
     body,
     imageName,
+    likes,
     date,
   });
   }
@@ -76,6 +78,7 @@ app.post("/post", upload.single('file'),  async (req, res) => {
     name,
     body,
     imageName,
+    likes,
     date,
   });
   }

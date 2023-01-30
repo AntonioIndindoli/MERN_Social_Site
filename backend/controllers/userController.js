@@ -12,8 +12,8 @@ const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-
 
 const signup = (req, res, next) => {
     let { name, email, password, password_confirmation } = req.body; let errors = [];
-    let img = 'placeholder'
-    let bio = 'placeholder'
+    let img = 'noImage'
+    let bio = 'No information given.'
     if (!name) {
         errors.push({ name: "required" });
     } if (!email) {

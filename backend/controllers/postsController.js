@@ -8,11 +8,11 @@ const upload = multer({ dest: 'uploads/' })
 
 const fetchPosts = async (req, res) => {
   // Find the posts
-  const posts = await Post.find().sort({date:-1});
+  const posts = await Post.find().sort({ date: -1 });
 
   for (let post of posts) {
-    if(post.imageName != 'noImage')
-    post.imageName = await getObjectSignedUrl(post.imageName)
+    if (post.imageName != 'noImage')
+      post.imageName = await getObjectSignedUrl(post.imageName)
   }
 
   // Respond with them
@@ -22,11 +22,11 @@ const fetchPosts = async (req, res) => {
 const fetchPostbyUser = async (req, res) => {
   // Find the posts
   var userurl = req.params.user;
-  const posts = await Post.find({ "name": userurl }).sort({date:-1});
+  const posts = await Post.find({ "name": userurl }).sort({ date: -1 });
 
   for (let post of posts) {
-    if(post.imageName != 'noImage')
-    post.imageName = await getObjectSignedUrl(post.imageName)
+    if (post.imageName != 'noImage')
+      post.imageName = await getObjectSignedUrl(post.imageName)
   }
 
   // Respond with them
@@ -38,12 +38,11 @@ const fetchPost = async (req, res) => {
   const PostId = req.params.id;
 
   // Find the Post using that id
-  const posts = await Post.findById(PostId);
+  const posts = await Post.findOne({ _id: PostId });
+  console.log(posts)
 
-  for (let post of posts) {
-    if(post.imageName != 'noImage')
-    post.imageName = await getObjectSignedUrl(post.imageName)
-  }
+  if (posts.imageName != 'noImage')
+  posts.imageName = await getObjectSignedUrl(posts.imageName)
 
   // Respond with the Post
   res.json({ posts });
@@ -51,15 +50,12 @@ const fetchPost = async (req, res) => {
 
 const likePost = async (req, res) => {
   const PostId = req.params.id;
-  Post.findByIdAndUpdate(PostId, {
-    $push: {likes: req.params.name}
-  }, {new: true}).exec((err, result) => {
-    if (err) {
-      return res.status(422).json({error: err})
-    } else {
-      return res.json(result)
-    }
-  })
+  const { name } = req.body;
+
+  const posts = await Post.findByIdAndUpdate(PostId,
+    { $addToSet: { likes: name } }, { new: true })
+
+  res.json({ posts });
 }
 
 const updatePost = async (req, res) => {
@@ -72,7 +68,7 @@ const updatePost = async (req, res) => {
   // Find and update the record
   await Post.findByIdAndUpdate(PostId, {
     name,
-    body, 
+    body,
     date
   });
 
