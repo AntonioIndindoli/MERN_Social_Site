@@ -19,7 +19,7 @@ export default function Profile() {
     const [data, setData] = useState([]);
     const [userData, setUserData] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:3000/post/" + user)
+        axios.get("http://localhost:3000/posts/" + user)
             .then((res) => setData(res.data.posts))
             .catch(console.error);
 
@@ -45,7 +45,7 @@ export default function Profile() {
                         <ProfilePic userParam={user} />
                         <a className="Post-text-title">{user}</a >
                         <p  className="Post-text">Joined on: {dateFormat(createdAt, "mmmm dS, yyyy")}</p >
-                        <p  className="show-more">{bio}</p >
+                        <p  className="Post-text">{bio}</p >
                         {currentUser == user && <EditUser />}
                     </div>
                 </div>

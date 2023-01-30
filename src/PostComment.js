@@ -4,26 +4,42 @@ import { Row, Form, Button } from "react-bootstrap";
 import DOMPurify from "dompurify";
 import dateFormat from 'dateformat';
 import { BrowserRouter as Router, useParams, } from "react-router-dom";
+import Tooltip from '@mui/material/Tooltip';
 import axios from "axios";
 import ProfilePic from "./ProfilePic";
 import speech from "./speech.png";
+import thumbup from "./thumbup.png";
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 export default function PostComment({ postId }) {
     var name = cookies.get("USER");
-    const profile = "/profile/" + name;
     const [body, setText] = useState("");
     const [showWarning, setWarning] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [commentData, setCommentData] = useState([]);
+    const [likeData, setlikeData] = useState([]);
+    const [hover, setHover] = useState(false);   
 
     useEffect(() => {
         axios.get("http://localhost:3000/comment/" + postId)
             .then((res) => setCommentData(res.data.comments))
             .catch(console.error);
+
+        axios.get("http://localhost:3000/post/" + postId)
+            .then((res) => setlikeData(res.data.posts))
+            .catch(console.error);
+
     }, []);
+
+    const onHover = () => {
+      setHover(true);
+    };
+  
+    const onLeave = () => {
+      setHover(false);
+    };
 
     const handleSubmit = (e) => {
         if (!name) {
@@ -53,6 +69,33 @@ export default function PostComment({ postId }) {
                     alert("Error");
                 });
             setText("");
+        }
+    }
+
+    const handleLike = (e) => {
+        if (!name) {
+            e.preventDefault();
+            setWarning(true);
+        } else {
+            const configuration = {
+                method: "put",
+                url: "http://localhost:3000/likepost/" + postId,
+                data: {
+                    name
+                },
+            };
+            // prevent the form from refreshing the whole page
+            e.preventDefault();
+            axios(configuration)
+                .then((result) => {
+                    axios.get("http://localhost:3000/post/" + postId)
+                        .then((res) => setlikeData(res.data.posts))
+                        .catch(console.error);
+                })
+                .catch((error) => {
+                    error = new Error();
+                    alert("Error");
+                });
         }
     }
 
@@ -114,19 +157,26 @@ export default function PostComment({ postId }) {
                     </div>
 
                     <Row>
-                    <Button
-                        className='show-more-row-wide'
-                        variant="primary"
-                        type="submit"
-                        onClick={(e) => handleShow(e)}
-                    >Hide Comments  <img className="comment-logo" src={speech} /></Button>
-                    <Button
-                        className='show-more-row-like'
-                        variant="primary"
-                        type="submit"
-                        onClick={(e) => handleShow(e)}
-                    >Like  <img className="comment-logo" src={speech} /></Button>
-                </Row>
+                        <Button
+                            className='show-more-row-wide'
+                            variant="primary"
+                            type="submit"
+                            onClick={(e) => handleShow(e)}
+                        >Hide Comments  <img className="comment-logo" src={speech} /></Button>
+                        <Tooltip title={likeData.likes &&"Liked By: " + likeData.likes.toString()}>
+                        <Button
+                            className='show-more-row-like'
+                            variant="primary"
+                            type="submit"
+                            onMouseEnter={onHover}
+                            onMouseLeave={onLeave}
+                            onClick={(e) => handleLike(e)}
+                        >
+                            {likeData.likes && <a> {likeData.likes.length} </a>}
+                            <img className="comment-logo" src={thumbup} />
+                        </Button>
+                        </Tooltip>
+                    </Row>
                 </React.Fragment>
             );
         }
@@ -172,12 +222,19 @@ export default function PostComment({ postId }) {
                         type="submit"
                         onClick={(e) => handleShow(e)}
                     >Hide Comments  <img className="comment-logo" src={speech} /></Button>
+                    <Tooltip title={likeData.likes &&"Liked By: " + likeData.likes.toString()}>
                     <Button
                         className='show-more-row-like'
                         variant="primary"
                         type="submit"
-                        onClick={(e) => handleShow(e)}
-                    >Like  <img className="comment-logo" src={speech} /></Button>
+                        onMouseEnter={onHover}
+                        onMouseLeave={onLeave}
+                        onClick={(e) => handleLike(e)}
+                    >
+                        {likeData.likes && <a> {likeData.likes.length} </a>}
+                        <img className="comment-logo" src={thumbup} />
+                    </Button>
+                    </Tooltip>
                 </Row>
             </React.Fragment>
         )
@@ -191,12 +248,19 @@ export default function PostComment({ postId }) {
                         type="submit"
                         onClick={(e) => handleShow(e)}
                     >Comments  <img className="comment-logo" src={speech} /></Button>
+                    <Tooltip title={likeData.likes &&"Liked By: " + likeData.likes.toString()}>
                     <Button
                         className='show-more-row-like'
                         variant="primary"
                         type="submit"
-                        onClick={(e) => handleShow(e)}
-                    >Like  <img className="comment-logo" src={speech} /></Button>
+                        onMouseEnter={onHover}
+                        onMouseLeave={onLeave}
+                        onClick={(e) => handleLike(e)}
+                    >
+                        {likeData.likes && <a> {likeData.likes.length} </a>}
+                        <img className="comment-logo" src={thumbup} />
+                    </Button>
+                    </Tooltip>
                 </Row>
             </React.Fragment>
         )
