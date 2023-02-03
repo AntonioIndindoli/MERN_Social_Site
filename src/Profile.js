@@ -1,22 +1,26 @@
 import axios from "axios";
-import React, { Container, Row, Col, useState, useEffect } from 'react';
-import { BrowserRouter as Router, useParams, } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as useParams, } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import PostComment from "./PostComment";
-import Comments from "./Comments";
 import DOMPurify from "dompurify";
 import dateFormat from 'dateformat';
 import ProfilePic from "./ProfilePic";
 import EditUser from './EditUser';
 import Post from './Post';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 
 
 export default function Profile() {
-    const token = cookies.get("TOKEN");
     const currentUser = cookies.get("USER");
+    
     const { user } = useParams();
+    alert("sex");
     const [data, setData] = useState([]);
+    const [showWarning, setWarning] = useState(false);
+    const [showForm, setForm] = useState(false);
     const [userData, setUserData] = useState([]);
     useEffect(() => {
         axios.get("http://localhost:3000/posts/" + user)
@@ -27,6 +31,16 @@ export default function Profile() {
             .then((res) => setUserData(res.data.user))
             .catch(console.error);
     }, []);
+
+    const handleSubmitShow = (e) => {
+        if (!currentUser) {
+            setWarning(true);
+            setForm(false);
+        }
+        else if (!showForm) {
+            setForm(true);
+        }
+    }
 
     if (data.length) {
         var createdAt = userData.map(({ createdAt }) => createdAt)
@@ -41,10 +55,10 @@ export default function Profile() {
         return (
             <React.Fragment>
                 <div className="group-feed">
-                    <div className="group-box-feed-post">
+                    <div className="group-box-post">
                         <ProfilePic userParam={user} />
                         <a className="Post-text-title">{user}</a >
-                        <p  className="Post-text">Joined on: {dateFormat(createdAt, "mmmm dS, yyyy")}</p >
+                        <p  className="edit-profile">Joined on: {dateFormat(createdAt, "mmmm dS, yyyy")}</p >
                         <p  className="Post-text">{bio}</p >
                         {currentUser == user && <EditUser />}
                     </div>
@@ -73,9 +87,13 @@ export default function Profile() {
             return (
             <React.Fragment>
                 <div className="group-feed">
-                    <div className="group-box-feed-post">
+                    <div className="group-box-post">
                         <ProfilePic userParam={user} />
-                        <a className="Post-text-title">{user}</a >
+                        <a className="Post-text-title">{user}   
+
+                    {showWarning && <p className='text-warning'>You must be signed in to edit</p>}
+
+                    </a >
                         <p  className="Post-text">Joined on: {dateFormat(createdAt, "mmmm dS, yyyy")}</p >
                         <p  className="Post-text">{bio}</p >
                         {currentUser == user && <EditUser />}
@@ -89,3 +107,13 @@ export default function Profile() {
     }
     return null;
 }
+
+/* 
+                        <Button
+                            className='show-more'
+                            variant="primary"
+                            onClick={(e) => handleSubmitShow(e)}
+                        >
+                            <SettingsIcon fontSize="large"></SettingsIcon>
+                              Edit</Button>
+*/

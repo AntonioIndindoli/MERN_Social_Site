@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from "react";
 import { Col, Row, Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
@@ -58,7 +59,7 @@ export default function EditUser({ user }) {
                     alert("Error");
                 });
         }
-        else{
+        else {
             const configuration = {
                 method: "put",
                 url: "http://localhost:3000/users/" + name,
@@ -89,56 +90,60 @@ export default function EditUser({ user }) {
     */
     return (
         <>
-            <div className="group-box-edit">
-                {showForm &&
-                    <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
-                        
-                        <p className='show-more'>Update Bio</p>
-                        {/* bio */}
-                        <Form.Group controlId="formBasictext">
-                            <textarea
-                                className='form-post-input-label-comment'
-                                type="textarea"
-                                name="text"
-                                value={bio}
-                                onChange={(e) => setText(e.target.value)}
-                                placeholder="Enter text"
-                            />
-                        </Form.Group>
 
-                        <p className='show-more'>Update Profile Picture</p>
-                        {/* submit button */}
-                        <Row className='button-bar'>
-                            {file && <p className='text-notify'>File Attached</p>}
-                            <Button className='submit-button' onClick={handleClick}>
-                                Upload a file
-                            </Button>
-                            <input
-                                type="file"
-                                ref={hiddenFileInput}
-                                onChange={fileSelected}
-                                style={{ display: 'none' }} />
 
-                            <Button
-                                className='submit-button'
-                                variant="primary"
-                                type="submit"
-                                onClick={(e) => handleSubmit(e)}
-                            >Post</Button>
+                    {showForm &&
+                        <Form className='form-struct-post' onSubmit={(e) => handleSubmit(e)}>
 
-                        </Row>
+                            <p className='edit-profile'>Update Bio</p>
+                            {/* bio */}
+                            <Form.Group controlId="formBasictext">
+                                <textarea
+                                    className='form-post-input-label-comment'
+                                    type="textarea"
+                                    name="text"
+                                    value={bio}
+                                    onChange={(e) => setText(e.target.value)}
+                                    placeholder="Enter text"
+                                />
+                            </Form.Group>
 
-                    </Form>
-                }
-                {!showForm &&
-                    <Button
-                        className='show-more'
-                        variant="primary"
-                        onClick={(e) => handleSubmitShow(e)}
-                    >Edit Profile</Button>
-                }
-                {showWarning && <p className='text-warning'>You must be signed in to edit</p>}
-            </div>
+                            <p className='edit-profile'>Update Profile Picture</p>
+                            {/* submit button */}
+                            <Row className='button-bar'>
+                                {file && <p className='text-notify'>File Attached</p>}
+                                <Button className='submit-button' onClick={handleClick}>
+                                    Upload Image
+                                </Button>
+                                <input
+                                    type="file"
+                                    ref={hiddenFileInput}
+                                    onChange={fileSelected}
+                                    style={{ display: 'none' }} />
+
+                                <Button
+                                    className='submit-button'
+                                    variant="primary"
+                                    type="submit"
+                                    onClick={(e) => handleSubmit(e)}
+                                >Save Changes</Button>
+
+                            </Row>
+
+                        </Form>
+                    }
+                    {!showForm &&
+                        <Button
+                            className='show-more'
+                            variant="primary"
+                            onClick={(e) => handleSubmitShow(e)}
+                        >
+                            <SettingsIcon fontSize="large"></SettingsIcon>
+                              Edit</Button>
+                    }
+                    {showWarning && <p className='text-warning'>You must be signed in to edit</p>}
+
+
         </>
     )
 
